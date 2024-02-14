@@ -89,7 +89,6 @@ datasets_params <- list(
 
 ### Simulate data sets #### 
 
-
 ## List to store data sets
 datasets <- list()
 
@@ -122,6 +121,6 @@ for (ii in 1:length(datasets_params)) {
   rm("ii", "i", "name", "beta0", "Xmatrix", "betamat", "umat", "gamma", "gmu", "mu")
 }
 
-## Save datasets (and their parameters; just in case)
+## Save datasets (and their parameters; just in case) ####
 save(datasets_params, U_i, X_i, n_sites, n_sps, file = "./datasets/datasets_all-params.rda")
-saveRDS(datasets, file = "./datasets/datasets.rds")
+save(datasets, file = "./datasets/datasets.rda")
