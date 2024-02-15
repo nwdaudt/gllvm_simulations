@@ -49,41 +49,45 @@ datasets_params <- list(
   # -- 1: likely no zeroes, 'high values' for all species
   dataset1 = list(
     ## Intercept (a value for each species)
-    beta0_j = c(2,1,1,0.5,0.5, 2,1,1,0.5,0.5, 2,1,1,0.5,0.5) + 2,
+    beta0_j = rep(c(2,1,1,0.5,0.5), 3) + 2,
     ## Beta_j matrix (species-specific coefficients related to covariates) 
-    Beta_j = cbind(c(2, 0.5), c(2, 0.5), c(1.5, 0.5), c(1, 0.5), c(1, -0.5),
-                   c(-2.5, 0.5), c(-2, 0), c(-1.5, 0.5), c(-1, 0.5), c(-0.5, 0),
-                   c(0.5, 0), c(0.5, 1), c(0.5, 0.5), c(0.5, 1), c(0.5, 0.5)),
+    Beta_j = matrix(data = 
+                      c(rnorm(5, 2,0.5), rnorm(5, -1.5,0.5), rnorm(5, 0,0.5),
+                        rnorm(5, -0.5,0.5), rnorm(5, 2,0.5), rnorm(5, 1,0.5)), 
+                    nrow = 2, ncol = 15, byrow = TRUE),
     ## Gamma_j matrix (species-specific coefficients related to latent variables) 
     # Easier to specify it in the 'transposed' format, then transpose it back as it should be.
     # To ensure that the matrix do not rotate, the diagonal has to be a positive number 
     # and above it 0 (see details in the Niku et al. 2019 paper, pp. 2174) -- 
     # for simplicity, we fixed the 'positive' value to 1, as implemented in {gllvm}.
-    Gamma_j = t( cbind(c(1, rnorm(n_sps-1,0,0.5)), c(0,1, rnorm(n_sps-2,0,0.5))) )
+    Gamma_j = t( cbind(c(1, rnorm(n_sps-1, 0, 0.5)), c(0,1, rnorm(n_sps-2, 0, 0.5))) )
   ),
   # -- 2: similar to dataset1, but smaller counts expected
   dataset2 = list(
-    beta0_j = c(2,1,1,0.5,0.5, 2,1,1,0.5,0.5, 2,1,1,0.5,0.5),
-    Beta_j = cbind(c(2, 0.5), c(2, 0.5), c(1.5, 0.5), c(1, 0.5), c(1, -0.5),
-                   c(-2.5, 0.5), c(-2, 0), c(-1.5, 0.5), c(-1, 0.5), c(-0.5, 0),
-                   c(0.5, 0), c(0.5, 1), c(0.5, 0.5), c(0.5, 1), c(0.5, 0.5)),
+    beta0_j = rep(c(2,1,1,0.5,0.5), 3),
+    Beta_j = matrix(data = 
+                      c(rnorm(5, 2,0.5), rnorm(5, -1.5,0.5), rnorm(5, 0,0.5),
+                        rnorm(5, -0.5,0.5), rnorm(5, 2,0.5), rnorm(5, 1,0.5)), 
+                    nrow = 2, ncol = 15, byrow = TRUE),
     Gamma_j = t( cbind(c(1, rnorm(n_sps-1, 0, 0.5)), c(0,1, rnorm(n_sps-2, 0, 0.5))) )
   ),
   # -- 3: sparse zeroes
   dataset3 = list(
     beta0_j = c(rep(1, n_sps)),
-    Beta_j = cbind(c(2, 0.5), c(2, 0.5), c(1.5, 0.5), c(1, 0.5), c(1, -0.5),
-                   c(-2.5, 0.5), c(-2, 0), c(-1.5, 0.5), c(-1, 0.5), c(-0.5, 0),
-                   c(0.5, 0), c(0.5, 1), c(0.5, 0.5), c(0.5, 1), c(0.5, 0.5)),
-    Gamma_j = t( cbind(c(1, rnorm(n_sps-1,0,0.5)), c(0,1, rnorm(n_sps-2,0,0.5))) )
+    Beta_j = matrix(data = 
+                      c(rnorm(5, 2,0.5), rnorm(5, -1.5,0.5), rnorm(5, 0,0.5),
+                        rnorm(5, -0.5,0.5), rnorm(5, 2,0.5), rnorm(5, 1,0.5)), 
+                    nrow = 2, ncol = 15, byrow = TRUE),
+    Gamma_j = t( cbind(c(1, rnorm(n_sps-1, 0, 0.5)), c(0,1, rnorm(n_sps-2, 0, 0.5))) )
   ),
   # -- 4: quite a few zeroes
   dataset4 = list(
     beta0_j = c(rep(0, n_sps)),
-    Beta_j = cbind(c(2, 0.5), c(2, 0.5), c(1.5, 0.5), c(1, 0.5), c(1, -0.5),
-                   c(-2.5, 0.5), c(-2, 0), c(-1.5, 0.5), c(-1, 0.5), c(-0.5, 0),
-                   c(0.5, 0), c(0.5, 1), c(0.5, 0.5), c(0.5, 1), c(0.5, 0.5)),
-    Gamma_j = t( cbind(c(1, rnorm(n_sps-1,0,0.5)), c(0,1, rnorm(n_sps-2,0,0.5))) )
+    Beta_j = matrix(data = 
+                      c(rnorm(5, 2,0.5), rnorm(5, -1.5,0.5), rnorm(5, 0,0.5),
+                        rnorm(5, -0.5,0.5), rnorm(5, 2,0.5), rnorm(5, 1,0.5)), 
+                    nrow = 2, ncol = 15, byrow = TRUE),
+    Gamma_j = t( cbind(c(1, rnorm(n_sps-1, 0, 0.5)), c(0,1, rnorm(n_sps-2, 0, 0.5))) )
   )
 )
 
